@@ -18,15 +18,19 @@
 * OpenOCD 【https://gnutoolchains.com/arm-eabi/openocd/】
 
 这三个是必要软件，只需要下压缩包解压放到一个的目录即可，最好是 **没有中文和空格** ，配置好Path环境，保证在cmd下这几行命令都能正常运行
+
 ``` bash
 gcc -v
 arm-none-eabi-gcc -v
 ```
 运行成功如下：
+
 ![image.png](https://upload-images.jianshu.io/upload_images/35286-02512060ad194751.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 # 配置CLion
+
 ### 1. 设置里配置编译工具链
+
 ![image.png](https://upload-images.jianshu.io/upload_images/35286-815534c61019c8a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 > 只需要配置下路径，其他都不用改
@@ -34,43 +38,58 @@ arm-none-eabi-gcc -v
 ![image.png](https://upload-images.jianshu.io/upload_images/35286-c59747954ab31a89.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### 2. 确认CMake使用了刚才配置的工具链
+
 ![image.png](https://upload-images.jianshu.io/upload_images/35286-a7cc8606c774e62b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### 3. 创建CubeMX工程
+
 ![image.png](https://upload-images.jianshu.io/upload_images/35286-c20c5c6ad7f9b032.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### 4. 将相关文件Copy到项目里【或者基于STM32CubeMX生成的项目删除不必要的文件】
+
 > 如下图所示，include&source是我自己的代码，startup和STM32F103C8Tx_FLASH.ld是从STM32CubeMX生成的项目里copy过来的
+
 ![image.png](https://upload-images.jianshu.io/upload_images/35286-e751d540a5fda7bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### 5. 修改CMakeLists.txt
+
 ![image.png](https://upload-images.jianshu.io/upload_images/35286-1a6810f9c1b4b951.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 修改完CMake后记得刷新下，要不然编译时会出现找不到文件，也可设置自动刷新
+
 ![image.png](https://upload-images.jianshu.io/upload_images/35286-4870b7994a06f1c2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 正常刷新后可以看到自动创建了一个运行任务，代码配置没问题的话可以直接编译出固件了
+
 ![image.png](https://upload-images.jianshu.io/upload_images/35286-3e08eb5ec9a72eba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### 6. 配置烧录
+
 运行配置里新建OpenOCD烧录
+
 ![image.png](https://upload-images.jianshu.io/upload_images/35286-f140721f3690dbe3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ![image.png](https://upload-images.jianshu.io/upload_images/35286-628e6c98b3accb04.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 选择好可执行程序和板子配置
+
 ![image.png](https://upload-images.jianshu.io/upload_images/35286-db29b16e881b56bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 在OpenOCD里有很多默认的配置，我这里用的F103，所以选了一个103的配置
+
 ![image.png](https://upload-images.jianshu.io/upload_images/35286-82ce71d4db5fc593.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 很多文章都建议修改下配置文件，注释掉最后一行“reset_config srst_only”，好像不注释也没问题
+
 ![image.png](https://upload-images.jianshu.io/upload_images/35286-bc373e7d160ad5c7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### 7. 大功告成
+
 ![image.png](https://upload-images.jianshu.io/upload_images/35286-ad0c4e09dbf5b6b8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 ![image.png](https://upload-images.jianshu.io/upload_images/35286-d250d2ea4ea584ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 # 最后
+
 放一个我编译烧录都OK的项目在github上，供大家参考，我是基于STM32F103C8T6的板子移植的，这两天用CLion开发STM32简直不要太爽，希望大家都能优雅的嵌入式开发
 https://github.com/vell001/CLionSTM32Demo
